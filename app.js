@@ -84,3 +84,60 @@ function createGallery(galleryItems) {
   }).join('');
 };
 
+// вешаем слушатель события на document
+refs.galleryEl.addEventListener('click', onDocumentClick);
+
+// Открытие модального окна по клику на элементе галереи.
+function onDocumentClick(event) {
+  console.log(event.target);
+  if (event.target.tagName !== 'IMG') return false;
+
+  const imgSrc = event.target.getAttribute('src');
+  console.log(imgSrc)
+
+  const preview = galleryItems.map(item => {
+    if (imgSrc === item.preview) {
+      refs.imgLightbox.setAttribute('src', item.original)
+    }
+  });
+
+  modalOpen();
+};
+
+function modalOpen() {
+  refs.divLightbox.classList.add('is-open');
+  document.addEventListener('keydown', onEscKeyPress);
+};
+
+
+
+// Очистка значения атрибута src элемента img.lightbox__image.
+function clearSrc() {
+  refs.imgLightbox.setAttribute('src', '');
+};
+
+// закрытие модального окна 
+function removeClassIsOpen() {
+  refs.divLightbox.classList.remove('is-open');
+};
+
+// по клику на кнопку button[data-action="close-lightbox"].
+refs.btnClose.addEventListener('click', (event) => {
+  removeClassIsOpen();
+  clearSrc();
+});
+
+// закрытие модального окна по нажатию клавиши ESC.
+function onEscKeyPress(event) {
+  if (event.code === 'Escape') {
+    removeClassIsOpen();
+    clearSrc();
+  }
+};
+
+
+
+// Подмена значения атрибута src элемента img.lightbox__image.
+// Закрытие модального окна по клику на div.lightbox__overlay.
+
+// Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо".
