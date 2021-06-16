@@ -63,3 +63,24 @@ const galleryItems = [
     description: 'Lighthouse Coast Sea',
   },
 ];
+
+// находим необходимые дом узлы
+const refs = {
+  galleryEl: document.querySelector('.js-gallery'),
+  divLightbox: document.querySelector('.js-lightbox'),
+  imgLightbox: document.querySelector('.lightbox__image'),
+  btnClose: document.querySelector('.lightbox__button'),
+};
+
+const createGalleryFn = createGallery(galleryItems);
+
+// добавляем разметку в <ul>
+refs.galleryEl.insertAdjacentHTML('afterbegin', createGalleryFn);
+
+// создаем разметку для галлерии
+function createGallery(galleryItems) {
+  return galleryItems.map(({ preview, description }) => {
+    return `<li class="gallery__item"><img class="gallery__image" src="${preview}" alt="${description}"></li>`
+  }).join('');
+};
+
